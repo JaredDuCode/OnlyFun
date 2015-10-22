@@ -54,7 +54,6 @@ public class Commiter {
 		SolrInputDocument doc1 = new SolrInputDocument();
 		doc1.setField("id", "F8V7067-APL-KIT");
 		doc1.setField("name", "dujiacheng");
-		//doc1.setField("abnc", "dujiacheng");
 		
 		
 		List<SolrInputDocument> docs = new ArrayList<SolrInputDocument>();
@@ -63,8 +62,6 @@ public class Commiter {
 		commiter.Index(docs);
 		
 		commiter.Commit();
-		
-//		commiter.query("url:http");
 		
 	}
 	
