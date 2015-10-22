@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-3.1.xsd 
+	http://www.springframework.org/schema/jee 
+	http://www.springframework.org/schema/jee/spring-jee-3.1.xsd 
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-3.1.xsd 
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-3.1.xsd"
+	default-autowire="byName">
+	
+	    <!-- 自动扫描所有注解 注册为bean (启动注解) -->  
+    <context:component-scan base-package="com.onlyfun">  
+        <context:exclude-filter expression="org.springframework.stereotype.Controller"  
+            type="annotation" />  
+    </context:component-scan>  
+
+	<bean id="bkuserCoresManyTimesADayTask_indexDelta_Detail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="timeTask" />
+		<property name="targetMethod" value="doJob" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="bkuserCoresManyTimesADayTask_IndexDelta_Trigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="bkuserCoresManyTimesADayTask_indexDelta_Detail" />
+		<property name="startDelay" value="5000" />   <!--  启动5秒后增量索引一次 -->  
+		<property name="repeatInterval" value="6000" />  <!--    10分钟执行一次 -->  
+	</bean>
+	
+	<bean id="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+		<constructor-arg value="http://localhost:8080/solr-4.10.4/collection1"/>
+	</bean>
+
+	<!-- 执行任务 -->
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean" autowire="no">
+		<property name="triggers">
+			<list>
+				<ref bean="bkuserCoresManyTimesADayTask_IndexDelta_Trigger"/>
+			</list>
+		</property>
+	</bean>
+	
+	
+
+</beans>
