@@ -30,6 +30,7 @@ public class Commiter {
 	
 	public void Commit() throws SolrServerException, IOException{
 		solrServer.commit(true,true);
+		
 	}
 	
 	public  void query(String queryStr) throws SolrServerException{
