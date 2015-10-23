@@ -20,6 +20,7 @@ public class Springtest {
 	    public static void main(String[] args){
 	        ApplicationContext ctx=new FileSystemXmlApplicationContext("src/com/onlyfun/springtest/application.xml");
 	        Springtest fs=(Springtest) ctx.getBean("myBean");
+
 	        fs.show();
 	    }
 
