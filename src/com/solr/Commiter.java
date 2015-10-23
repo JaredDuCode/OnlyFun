@@ -36,6 +36,7 @@ public class Commiter {
 	public  void query(String queryStr) throws SolrServerException{
 		SolrQuery solrQuery = new SolrQuery(queryStr);  
 		solrQuery.setRows(5);  
+		
         QueryResponse resp = solrServer.query(solrQuery);  
         SolrDocumentList hits = resp.getResults();  
         
