@@ -6,7 +6,10 @@ public abstract class Father {
 		sys();
 	}
 	
+	
+	
 	void sys(){
+		
 		System.out.println("it is father");
 	}
 
