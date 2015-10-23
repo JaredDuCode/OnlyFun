@@ -15,7 +15,7 @@ import org.apache.solr.common.SolrInputDocument;
 
 public class Commiter {
 
-	final String serverUrl = "http://localhost:8080/local-solr/mycore";
+	final String serverUrl = "http://localhost:8081/local-solr/mycore";
 	SolrServer solrServer;
 	
 	
